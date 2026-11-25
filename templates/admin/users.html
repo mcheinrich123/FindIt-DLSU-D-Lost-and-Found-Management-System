@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>(function () { var t; try { t = localStorage.getItem("findit.theme"); } catch (e) {} document.documentElement.dataset.theme = t === "dark" || t === "light" ? t : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); })();</script>
+  <title>FindIt Admin | Users</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/admin.css') }}">
+  <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+  <script>Auth.requireRole("admin", "/login?role=admin");</script>
+</head>
+<body data-page="users">
+  <div id="admin-sidebar"></div>
+  <div class="admin-main">
+    <div id="admin-topbar"></div>
+    <main class="admin-content">
+      <header class="page-head">
+        <h1>Student and employee accounts</h1>
+      </header>
+      <section class="admin-card" aria-label="Student and employee accounts">
+        <p class="found-summary" id="users-summary" role="status" tabindex="-1">Loading accounts…</p>
+        <p class="admin-delete-feedback" id="users-result" role="status" tabindex="-1" hidden></p>
+        <p class="admin-delete-feedback is-error" id="users-error" role="alert" hidden></p>
+        <div class="table-wrap" id="users-table" hidden>
+          <table class="admin-table">
+            <thead>
+              <tr><th scope="col">Name</th><th scope="col">Email</th><th scope="col">School ID</th><th scope="col">Reports</th><th scope="col">Claims</th><th scope="col">Messages</th><th scope="col">Actions</th></tr>
+            </thead>
+            <tbody id="users-rows"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/data/locations.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/item-store.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/settings-store.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/photos.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/items-api.js') }}"></script>
+  <script src="{{ url_for('static', filename='admin/js/admin-api.js') }}"></script>
+  <script src="{{ url_for('static', filename='admin/js/admin.js') }}"></script>
+  <script src="{{ url_for('static', filename='admin/js/notifications.js') }}"></script>
+  <script src="{{ url_for('static', filename='admin/js/add-item.js') }}"></script>
+  <script src="{{ url_for('static', filename='admin/js/users.js') }}"></script>
+</body>
+</html>

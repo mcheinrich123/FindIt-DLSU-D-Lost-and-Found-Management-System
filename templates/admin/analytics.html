@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Light or dark before the page draws: the saved choice, else the device setting -->
+  <script>(function () { var t; try { t = localStorage.getItem("findit.theme"); } catch (e) {} document.documentElement.dataset.theme = t === "dark" || t === "light" ? t : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); })();</script>
+  <title>FindIt Admin | Analytics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/admin.css') }}">
+  <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+  <script>Auth.requireRole("admin", "/login?role=admin");</script>
+</head>
+<body data-page="analytics">
+
+  <div id="admin-sidebar"></div>
+
+  <div class="admin-main">
+    <div id="admin-topbar"></div>
+
+    <!-- Filled in by admin/js/analytics.js from every report -->
+    <main class="admin-content">
+      <header class="page-head analytics-head">
+        <div>
+          <h1>Analytics</h1>
+          <p>Lost and found reports over time, and where, what and how far along they are.</p>
+        </div>
+        <label class="analytics-filter">
+          Period
+          <select class="admin-select" id="period-filter">
+            <option value="">All time</option>
+          </select>
+        </label>
+      </header>
+
+      <section class="stat-grid" id="analytics-stats" aria-label="Report totals"></section>
+
+      <div class="analytics-grid">
+        <section class="admin-card analytics-wide" aria-labelledby="trend-heading">
+          <div class="card-head">
+            <h2 id="trend-heading">Reports by month</h2>
+            <ul class="legend" id="trend-legend"></ul>
+          </div>
+          <div class="chart-body">
+            <div class="chart-canvas"><canvas id="trend-chart" role="img"></canvas></div>
+            <details class="chart-table">
+              <summary>View as table</summary>
+              <div id="trend-table"></div>
+            </details>
+          </div>
+        </section>
+
+        <section class="admin-card" aria-labelledby="status-heading">
+          <div class="card-head">
+            <h2 id="status-heading">By status</h2>
+          </div>
+          <div class="chart-body">
+            <div class="chart-canvas"><canvas id="status-chart" role="img"></canvas></div>
+            <details class="chart-table">
+              <summary>View as table</summary>
+              <div id="status-table"></div>
+            </details>
+          </div>
+        </section>
+
+        <section class="admin-card" aria-labelledby="category-heading">
+          <div class="card-head">
+            <h2 id="category-heading">By category</h2>
+          </div>
+          <div class="chart-body">
+            <div class="chart-canvas"><canvas id="category-chart" role="img"></canvas></div>
+            <details class="chart-table">
+              <summary>View as table</summary>
+              <div id="category-table"></div>
+            </details>
+          </div>
+        </section>
+
+        <section class="admin-card analytics-wide" aria-labelledby="location-heading">
+          <div class="card-head">
+            <h2 id="location-heading">Top locations</h2>
+          </div>
+          <div class="chart-body">
+            <div class="chart-canvas"><canvas id="location-chart" role="img"></canvas></div>
+            <details class="chart-table">
+              <summary>View as table</summary>
+              <div id="location-table"></div>
+            </details>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" crossorigin="anonymous"></script>
+
+  <!-- Shared JavaScript -->
+  <script src="{{ url_for('static', filename='js/data/locations.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/item-store.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/settings-store.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/photos.js') }}"></script>
+
+  <!-- Admin JavaScript -->
+  <script src="{{ url_for('static', filename='js/items-api.js') }}"></script>
+  <script src="{{ url_for('static', filename='admin/js/admin-api.js') }}"></script>
+  <script src="{{ url_for('static', filename='admin/js/admin.js') }}"></script>
+  <script src="{{ url_for('static', filename='admin/js/notifications.js') }}"></script>
+  <script src="{{ url_for('static', filename='admin/js/add-item.js') }}"></script>
+  <script src="{{ url_for('static', filename='admin/js/analytics.js') }}"></script>
+</body>
+</html>

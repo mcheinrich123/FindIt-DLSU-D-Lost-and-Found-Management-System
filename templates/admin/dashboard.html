@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>
+        (function () {
+            let theme;
+
+            try {
+                theme = localStorage.getItem("findit.theme");
+            } catch (error) {}
+
+            document.documentElement.dataset.theme =
+                theme === "dark" || theme === "light"
+                    ? theme
+                    : (
+                        matchMedia("(prefers-color-scheme: dark)").matches
+                            ? "dark"
+                            : "light"
+                    );
+        })();
+    </script>
+
+    <title>FindIt Admin | Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap"
+    >
+
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/base.css') }}">
+
+    <!-- Admin CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin/css/admin.css') }}">
+
+  <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+  <script>Auth.requireRole("admin", "/login?role=admin");</script>
+
+</head>
+
+<body data-page="dashboard">
+
+    <div id="admin-sidebar"></div>
+
+    <div class="admin-main">
+
+        <div id="admin-topbar"></div>
+
+        <main class="admin-content">
+
+            <header class="page-head">
+                <h1 id="greeting">Dashboard</h1>
+                <p>Here's what's happening on campus today.</p>
+            </header>
+
+            <section
+                class="stat-grid"
+                id="stat-grid"
+                aria-label="Dashboard statistics">
+            </section>
+
+            <div class="chart-grid">
+
+                <section class="admin-card">
+
+                    <div class="card-head">
+                        <h2>Reports this week</h2>
+                        <ul class="legend" id="weekly-legend"></ul>
+                    </div>
+
+                    <div class="chart-body">
+                        <div class="chart-canvas">
+                            <canvas id="weekly-chart"></canvas>
+                        </div>
+
+                        <details class="chart-table">
+                            <summary>View as table</summary>
+                            <div id="weekly-table"></div>
+                        </details>
+                    </div>
+
+                </section>
+
+                <section class="admin-card">
+
+                    <div class="card-head">
+                        <h2>Items by category</h2>
+                    </div>
+
+                    <div class="chart-body">
+
+                        <div class="donut-wrap">
+                            <canvas id="category-chart"></canvas>
+
+                            <div
+                                class="donut-center"
+                                id="category-total">
+                            </div>
+                        </div>
+
+                        <ul
+                            class="category-legend"
+                            id="category-legend">
+                        </ul>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+            <section class="admin-card">
+
+                <div class="card-head">
+                    <h2>Lost items reported today</h2>
+
+                    <a href="{{ url_for('admin_reports') }}"
+                       class="card-link">
+                        View all →
+                    </a>
+                </div>
+
+                <div class="table-wrap">
+
+                    <table class="admin-table">
+
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Category</th>
+                                <th>Location</th>
+                                <th>Reported by</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="today-body"></tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"
+            crossorigin="anonymous"></script>
+
+       <!-- Shared JavaScript -->
+    <script src="{{ url_for('static', filename='js/data/locations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/item-store.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/settings-store.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/photos.js') }}"></script>
+
+    <!-- Admin JavaScript -->
+    <script src="{{ url_for('static', filename='js/items-api.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/admin-api.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/admin.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/notifications.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/add-item.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/dashboard.js') }}"></script>
+</body>
+</html>
